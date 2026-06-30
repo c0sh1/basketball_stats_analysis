@@ -8,6 +8,7 @@ st.set_page_config(
     layout='wide'
 )
 
+df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
 
 st.title('🏀 Stats by Season')
 st.write('Análisis de estadísticas de baloncesto: NBA vs Ligas Internacionales')
