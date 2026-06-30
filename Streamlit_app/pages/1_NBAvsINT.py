@@ -17,6 +17,7 @@ def load_data():
     df = pd.read_csv(Path(__file__).parent.parent.parent / "Data" / "stsbyseasonclean.csv")
     return df
 
+df= load_data()
 
 #1 _______________Filtramos los Datos de NBA e INT__________________
 
