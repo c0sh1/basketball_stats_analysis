@@ -10,7 +10,7 @@ st.set_page_config(
 
 
 # Cargar datos
-df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
+
 
 @st.cache_data
 def load_data():
