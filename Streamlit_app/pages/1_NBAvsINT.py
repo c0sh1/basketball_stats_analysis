@@ -14,7 +14,7 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
+    df = pd.read_csv(Path(__file__).parent.parent.parent / "Data" / "stsbyseasonclean.csv")
     return df
 
 

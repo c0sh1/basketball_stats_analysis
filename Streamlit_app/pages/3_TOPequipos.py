@@ -8,7 +8,7 @@ st.set_page_config(page_title="Top Equipos", page_icon="🏆", layout="wide")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
+    df = pd.read_csv(Path(__file__).parent.parent.parent / "Data" / "stsbyseasonclean.csv")
     return df
 
 df = load_data()
