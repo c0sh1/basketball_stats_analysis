@@ -51,19 +51,19 @@ st.sidebar.header("Filtros")
 ligas = ['Todas'] + sorted(filtrar_excepto('liga')['League'].unique().tolist())
 liga_sel = st.sidebar.selectbox("Liga", ligas, key="liga")
 
-temporadas = ['Todas'] + sorted(filtrar_excepto('temporada')['Season'].unique().tolist())
-temporada_sel = st.sidebar.selectbox("Temporada", temporadas, key="temporada")
-
-stages = ['Todos'] + sorted(filtrar_excepto('stage')['Stage'].unique().tolist())
-stage_sel = st.sidebar.selectbox("Stage", stages, key="stage")
-
 equipos = ['Todos'] + sorted(filtrar_excepto('equipo')['Team'].unique().tolist())
 equipo_sel = st.sidebar.selectbox("Equipo", equipos, key="equipo")
 
 jugadores = ['Todos'] + sorted(filtrar_excepto('jugador')['Player'].unique().tolist())
 jugador_sel = st.sidebar.selectbox("Jugador", jugadores, key="jugador")
 
-st.sidebar.button("🔄 Resetear filtros", on_click=resetear_filtros)
+temporadas = ['Todas'] + sorted(filtrar_excepto('temporada')['Season'].unique().tolist())
+temporada_sel = st.sidebar.selectbox("Temporada", temporadas, key="temporada")
+
+stages = ['Todos'] + sorted(filtrar_excepto('stage')['Stage'].unique().tolist())
+stage_sel = st.sidebar.selectbox("Stage", stages, key="stage")
+
+st.sidebar.button("🔄Reset🔄", on_click=resetear_filtros)
 
 # ______df_filtrado final (todos los filtros aplicados)______
 df_filtrado = filtrar_excepto(None)
@@ -95,6 +95,7 @@ with tab1:
 with tab2:
     if jugador_sel != 'Todos':
         st.markdown(f"### 📈 Evolución de {jugador_sel}")
+        st.markdown('###### Usa los filtros')
 
         if df_filtrado.duplicated(subset='Season').any():
             st.warning("⚠️ Este jugador tiene varios registros por temporada (Regular Season/Playoffs/International). Filtra por Stage para una vista más clara.")
