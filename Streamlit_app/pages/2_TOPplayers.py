@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
 st.set_page_config(page_title="Top Jugadores", page_icon="🏆", layout="wide")
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv('../Data/stsbyseasonclean.csv')
+    df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
     return df
 
 df = load_data()
