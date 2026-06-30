@@ -5,6 +5,8 @@ from pathlib import Path
 
 st.set_page_config(page_title="Top Equipos", page_icon="🏆", layout="wide")
 
+df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
+
 @st.cache_data
 def load_data():
     df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
