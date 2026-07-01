@@ -47,13 +47,13 @@ with col2:
     with st.container(border=True):
         st.markdown("#### 🏆 Top Jugadores")
         st.caption("Explora los mejores jugadores con filtros interactivos")
-        st.page_link("pages/2_Top_players.py", label="Ir a la página ->")
+        st.page_link("pages/2_TOP_players.py", label="Ir a la página ->")
 
 with col3:
     with st.container(border=True):
         st.markdown("#### 🏀 Top Equipos")
         st.caption("Descubre los mejores equipos históricos y por temporada")
-        st.page_link("pages/3_Top_equipos.py", label="Ir a la página ->")
+        st.page_link("pages/3_TOP_equipos.py", label="Ir a la página ->")
 
 with col4:
     with st.container(border=True):
