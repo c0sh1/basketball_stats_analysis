@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+from PIL import Image
+
 
 st.set_page_config(
     page_title="Stats by Season",
@@ -9,6 +11,61 @@ st.set_page_config(
 )
 
 df = pd.read_csv(Path(__file__).parent.parent / "Data" / "stsbyseasonclean.csv")
+
+
+# ____________BANNER_________
+banner = Image.open(Path(__file__).parent / "assets" / "banner.png")
+_, col_banner, _ = st.columns([1, 2, 1])
+with col_banner:
+    st.image(banner, use_container_width=True)
+
+
+
+
+st.title('🏀 Stats by Season')
+
+st.markdown("""
+Análisis de estadísticas de baloncesto: **NBA vs Ligas Internacionales**
+
+Este dashboard explora datos desde 1999 hasta 2020.
+""")
+
+st.divider()
+
+# ───── Navegación visual ─────
+st.markdown("### 📂 Explora el dashboard")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    with st.container(border=True):
+        st.markdown("#### 🆚 NBA vs Internacional")
+        st.caption("Compara estadísticas entre la NBA y las ligas internacionales")
+        st.page_link("pages/1_NBA_vs_INT.py", label="Ir a la página →")
+
+with col2:
+    with st.container(border=True):
+        st.markdown("#### 🏆 Top Jugadores")
+        st.caption("Explora los mejores jugadores con filtros interactivos")
+        st.page_link("pages/2_Top_players.py", label="Ir a la página →")
+
+with col3:
+    with st.container(border=True):
+        st.markdown("#### 🏀 Top Equipos")
+        st.caption("Descubre los mejores equipos históricos y por temporada")
+        st.page_link("pages/3_Top_equipos.py", label="Ir a la página →")
+
+with col4:
+    with st.container(border=True):
+        st.markdown("#### 🌍 Talento por País")
+        st.caption("Qué países producen más talento en el baloncesto mundial")
+        st.page_link("pages/4_Talento_pais.py", label="Ir a la página →")
+
+st.divider()
+
+
+
+
 
 st.title('🏀 Stats by Season')
 st.write('Análisis de estadísticas de baloncesto: NBA vs Ligas Internacionales')
