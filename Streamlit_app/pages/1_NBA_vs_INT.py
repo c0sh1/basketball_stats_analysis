@@ -27,7 +27,7 @@ df_int = df[df['Stage'] == 'International']
 
 #2 _____________________Comparaciones____________________
 
-st.title("🆚 NBA vs Internacional")
+st.title(" NBA 🆚 Internacional")
 
 st.markdown("### Comparativa de rendimiento promedio")
 
