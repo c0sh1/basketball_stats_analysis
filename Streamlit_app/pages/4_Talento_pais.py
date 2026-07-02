@@ -14,16 +14,34 @@ df = load_data()
 
 st.title("🌍 Talento por País")
 
-# ───── Preparar datos ─────
+# ───── Preparar datos igual que en el EDA ─────
 df_c = df.copy()
 df_c = df_c[df_c['MIN'] > 0]
 
-df_c['performance'] = df_c['PTS'] + df_c['REB'] + df_c['AST'] + df_c['STL'] + df_c['BLK']
-df_c['performpermin'] = df_c['performance'] / df_c['MIN']
+df_nba_f = df_c[df_c['League'] == 'NBA'].copy()
+df_int_f = df_c[df_c['Stage'] == 'International'].copy()
+
+# ───── Filtro Q1 minutos Internacional ─────
+q1_min = df_int_f.groupby('League')['MIN'].quantile(0.25)
+df_int_f = df_int_f.merge(q1_min.rename('min_req'), on='League')
+df_int_f = df_int_f[df_int_f['MIN'] >= df_int_f['min_req']].copy()
+
+# ───── Filtro Q1 minutos NBA ─────
+q1_min_nba = df_nba_f.groupby('League')['MIN'].quantile(0.25)
+df_nba_f = df_nba_f.merge(q1_min_nba.rename('min_req'), on='League')
+df_nba_f = df_nba_f[df_nba_f['MIN'] >= df_nba_f['min_req']].copy()
+
+# ───── Calcular performance y performpermin ─────
+for d in [df_nba_f, df_int_f]:
+    d['performance'] = d['PTS'] + d['REB'] + d['AST'] + d['STL'] + d['BLK']
+    d['performpermin'] = d['performance'] / d['MIN']
+
+# ───── Combinar NBA + Internacional ─────
+df_all_f = pd.concat([df_nba_f, df_int_f])
 
 # ───── Top 10 nacionalidades con mínimo 30 jugadores ─────
 talento_pais = (
-    df_c.groupby('nationality')['performpermin']
+    df_all_f.groupby('nationality')['performpermin']
     .agg(['mean', 'count'])
     .query('count >= 30')
     .sort_values('mean', ascending=False)
@@ -37,9 +55,9 @@ talento_pais['Performance_promedio'] = talento_pais['Performance_promedio'].roun
 top10_paises = talento_pais['Nacionalidad'].tolist()
 
 mejor_jugador_pais = (
-    df_c[df_c['nationality'].isin(top10_paises)]
+    df_all_f[df_all_f['nationality'].isin(top10_paises)]
     .loc[
-        df_c[df_c['nationality'].isin(top10_paises)]
+        df_all_f[df_all_f['nationality'].isin(top10_paises)]
         .groupby('nationality')['performpermin']
         .idxmax(),
         ['nationality', 'Player', 'performpermin', 'Season', 'League']
@@ -74,10 +92,10 @@ st.divider()
 # ───── Slider por temporada ─────
 st.markdown("### 🔎 Mejor jugador por temporada")
 
-temporadas = sorted(df_c['Season'].unique().tolist())
+temporadas = sorted(df_all_f['Season'].unique().tolist())
 temporada_sel = st.select_slider("Selecciona una temporada", options=temporadas, key="slider_pais")
 
-df_sel = df_c[df_c['Season'] == temporada_sel]
+df_sel = df_all_f[df_all_f['Season'] == temporada_sel]
 
 if not df_sel.empty:
     mejor_jugador_año = (
@@ -117,8 +135,7 @@ with tab2:
     st.markdown("### Top 10 países por performance promedio")
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    colors = ['purple'] * len(talento_pais)
-    ax.barh(talento_pais['Nacionalidad'], talento_pais['Performance_promedio'], color=colors)
+    ax.barh(talento_pais['Nacionalidad'], talento_pais['Performance_promedio'], color='purple')
     ax.set_title('Top 10 Nacionalidades por Performance promedio')
     ax.set_xlabel('Performance por minuto (promedio)')
     ax.invert_yaxis()
