@@ -39,6 +39,15 @@ for d in [df_nba_f, df_int_f]:
 # ───── Combinar NBA + Internacional ─────
 df_all_f = pd.concat([df_nba_f, df_int_f])
 
+# ───── Mejor jugador mundial (sin restricción de país) ─────
+mejor_jugador_mundial = (
+    df_all_f.groupby(['Player', 'nationality', 'League', 'Season'])['performpermin']
+    .mean()
+    .reset_index()
+    .sort_values('performpermin', ascending=False)
+    .iloc[0]
+)
+
 # ───── Top 10 nacionalidades con mínimo 30 jugadores ─────
 talento_pais = (
     df_all_f.groupby('nationality')['performpermin']
@@ -83,9 +92,9 @@ with col1:
 with col2:
     with st.container(border=True):
         st.metric("Mejor jugador mundial",
-                  mejor_jugador_pais.iloc[0]['Jugador'],
-                  f"{mejor_jugador_pais.iloc[0]['Performance']:.3f} perf/min")
-        st.caption(f"🌍 {mejor_jugador_pais.iloc[0]['Nacionalidad']} | {mejor_jugador_pais.iloc[0]['Liga']} | {mejor_jugador_pais.iloc[0]['Season']}")
+                  mejor_jugador_mundial['Player'],
+                  f"{mejor_jugador_mundial['performpermin']:.3f} perf/min")
+        st.caption(f"🌍 {mejor_jugador_mundial['nationality']} | {mejor_jugador_mundial['League']} | {mejor_jugador_mundial['Season']}")
 
 st.divider()
 
