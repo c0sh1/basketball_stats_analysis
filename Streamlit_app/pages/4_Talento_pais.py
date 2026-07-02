@@ -12,7 +12,7 @@ def load_data():
 
 df = load_data()
 
-st.title("🌍 Talento por País")
+st.title("Talento por País")
 
 # ───── Preparar datos igual que en el EDA ─────
 df_c = df.copy()
@@ -99,7 +99,7 @@ with col2:
 st.divider()
 
 # ───── Slider por temporada ─────
-st.markdown("### 🔎 Mejor jugador por temporada")
+st.markdown("### Mejor jugador por temporada")
 
 temporadas = sorted(df_all_f['Season'].unique().tolist())
 temporada_sel = st.select_slider("Selecciona una temporada", options=temporadas, key="slider_pais")

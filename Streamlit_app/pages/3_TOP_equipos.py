@@ -80,7 +80,7 @@ best_season_int = (
 top5_int = team_avg_int.merge(best_season_int, on=['Team', 'League'])
 top5_int.columns = ['Equipo', 'Liga', 'Performance', 'Mejor Season']
 
-st.title("🏆 Top Equipos")
+st.title("Top Equipos")
 
 # ───── Tabs principales ─────
 tab_rankings, tab_graficas = st.tabs(["🏀 Top 5 Histórico", "📊 Gráficas"])
@@ -111,7 +111,7 @@ with tab_rankings:
     st.divider()  # ← divider entre secciones
 
     # ───── Filtro por temporada ─────
-    st.markdown("### 🔎 Explorar por temporada")
+    st.markdown("### Comparaciones por temporada")
     temporadas = sorted(df['Season'].unique().tolist())
     temporada_sel = st.select_slider("Selecciona una temporada", options=temporadas)
 

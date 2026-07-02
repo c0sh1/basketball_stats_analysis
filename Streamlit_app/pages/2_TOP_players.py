@@ -13,7 +13,7 @@ def load_data():
 
 df = load_data()
 
-st.title("🏆 Top Jugadores")
+st.title("Top Jugadores")
 
 # ______Función para resetear______
 def resetear_filtros():
@@ -63,7 +63,7 @@ temporada_sel = st.sidebar.selectbox("Temporada", temporadas, key="temporada")
 stages = ['Todos'] + sorted(filtrar_excepto('stage')['Stage'].unique().tolist())
 stage_sel = st.sidebar.selectbox("Stage", stages, key="stage")
 
-st.sidebar.button("🔄Reset🔄", on_click=resetear_filtros)
+st.sidebar.button("Reset🔄", on_click=resetear_filtros)
 
 # ______df_filtrado final (todos los filtros aplicados)______
 df_filtrado = filtrar_excepto(None)
@@ -78,10 +78,10 @@ st.divider()
 if liga_sel == 'Todas':
     st.info("💡 Mostrando jugadores de todas las ligas. Las estadísticas brutas no son directamente comparables entre ligas con diferente número de minutos jugados.")
 
-tab1, tab2 = st.tabs(["🏆 Top 10 por Puntos", "📈 Evolución del Jugador"])
+tab1, tab2 = st.tabs(["Top 10 por Puntos", "Evolución del Jugador"])
 
 with tab1:
-    st.markdown("### 🏆 Top 10 por Puntos")
+    st.markdown("### Top 10 por Puntos")
     st.markdown('###### Usa los filtros')
 
     top10 = (
@@ -94,7 +94,7 @@ with tab1:
 
 with tab2:
     if jugador_sel != 'Todos':
-        st.markdown(f"### 📈 Evolución de {jugador_sel}")
+        st.markdown(f"### Evolución de {jugador_sel}")
         st.markdown('###### Usa los filtros')
 
         if df_filtrado.duplicated(subset='Season').any():
